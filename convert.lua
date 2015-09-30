@@ -35,16 +35,16 @@ function convert(train)
   -- print(labels:size())
 
   train.data = new_data
-  train.labels = new_labels
+  train.labels = new_labels:add(1)
 
-  -- print (train)
+  print (train.labels:min(), train.labels:max())
 
   return train
 end
 
 function convert_train_valid_to_train()
-  local load_train = torch.load("train.t7")
-  local load_val = torch.load("valid.t7")
+  local load_train = torch.load("./mnist/train.t7")
+  local load_val = torch.load("./mnist/valid.t7")
 
   local save_train = convert(load_train)
   local save_val = convert(load_val)
@@ -67,11 +67,17 @@ function convert_train_valid_to_train()
 end
 
 function convert_test()
-  local load_test = torch.load("test.t7")
+  local load_test = torch.load("./mnist/test.t7")
   local final_test = convert(load_test)
   torch.save("test_28x28.t7", final_test)
   print(final_test)
 end
+
+
+-- main function
+-- convert_test()
+convert_train_valid_to_train()
+
 
 
 
